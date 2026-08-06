@@ -585,3 +585,14 @@ The three slow scripts still map the full member matrix, which is larger than th
 porting them to `load_sub()` would bring them to seconds as well. `stride/figs/superseded/` holds an
 earlier one-family, twelve-draw version of Figure 3 and should not be cited.
 
+## Appendix B — the protocol in one function
+
+    for each of 8 blocks (isopach quartiles, XY blocks; sizes printed):
+        p_A = argmin over the fixed grid of  rms(A(p), rows outside the block)
+        p_B = argmin over the fixed grid of  rms(B(p), rows outside the block)
+        record rms(B(p_B), block) - rms(A(p_A), block)
+    report the mean and the count of blocks where B wins
+    7/8 -> p = 0.035;  6/8 -> 0.145;  5/8 -> chance
+
+Both designs are tuned outside the block, the added term's weight is one fixed value across blocks,
+and the block sizes are printed on every run.
