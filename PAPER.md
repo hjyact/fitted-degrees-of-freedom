@@ -525,3 +525,43 @@ for the content of the publication.
 
 ---
 
+## References
+
+Ambroise, C. and McLachlan, G. J. (2002). Selection bias in gene extraction on the basis of
+microarray gene-expression data. *PNAS* 99(10), 6562–6566.
+
+Bates, J. M. and Granger, C. W. J. (1969). The combination of forecasts. *Operational Research
+Quarterly* 20(4), 451–468.
+
+Breiman, L. (1996). Stacked regressions. *Machine Learning* 24, 49–64.
+
+Cawley, G. C. and Talbot, N. L. C. (2010). On over-fitting in model selection and subsequent
+selection bias in performance evaluation. *Journal of Machine Learning Research* 11, 2079–2107.
+
+Chilès, J.-P. and Delfiner, P. (2012). *Geostatistics: Modeling Spatial Uncertainty*, 2nd edn.
+Wiley.
+
+Claeskens, G., Magnus, J. R., Vasnev, A. L. and Wang, W. (2016). The forecast combination puzzle: a
+simple theoretical explanation. *International Journal of Forecasting* 32(3), 754–762.
+
+Matheron, G. (1963). Principles of geostatistics. *Economic Geology* 58(8), 1246–1266.
+
+Smith, J. and Wallis, K. F. (2009). A simple explanation of the forecast combination puzzle.
+*Oxford Bulletin of Economics and Statistics* 71(3), 331–355.
+
+Timmermann, A. (2006). Forecast combinations. In G. Elliott, C. W. J. Granger and A. Timmermann
+(eds), *Handbook of Economic Forecasting*, vol. 1, ch. 4. Elsevier.
+
+van der Laan, M. J., Polley, E. C. and Hubbard, A. E. (2007). Super Learner. *Statistical
+Applications in Genetics and Molecular Biology* 6(1), art. 25.
+
+Varma, S. and Simon, R. (2006). Bias in error estimation when using cross-validation for model
+selection. *BMC Bioinformatics* 7, 91.
+
+Wang, X., Hyndman, R. J., Li, F. and Kang, Y. (2023). Forecast combinations: an over 50-year
+review. *International Journal of Forecasting* 39(4), 1518–1547.
+
+Wolpert, D. H. (1992). Stacked generalization. *Neural Networks* 5(2), 241–259.
+
+---
+
