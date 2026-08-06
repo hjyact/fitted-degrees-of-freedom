@@ -102,3 +102,44 @@ to mean.
 
 ---
 
+## 2. Method, only as much as the argument needs
+
+Each *member* is a forward-backward smoother over a two-dimensional latent state: the deviation of
+the well from a reference line, and the deviation of the local dip from that line's slope. The state
+evolves along measured depth with a process noise on the dip; the observation model is a sum of
+independent likelihood channels, and members differ in which channels are enabled and how much each
+is trusted:
+
+* the well's own gamma ray matched against its typewell's log at candidate stratigraphic positions;
+* a kriged structural surface interpolated from the training wells' horizon picks at this well's
+  coordinates;
+* the gamma-ray logs of *neighbouring laterals* at their known stratigraphic position, pooled within
+  a radius on an absolute stratigraphic coordinate;
+* a finished baseline predictor ("carrier") entered as a third emission rather than as a prior.
+
+The answer is not a member. It is a gated move from the carrier toward a mixture of family means,
+
+    P = B + w₀ · exp(γ · g) · (T − B),   clipped to ±c · p,
+
+where T mixes the family means, g is a per-row gate built from the smoother's own posterior spread
+and from the disagreement between two families, and p is the row's fractional distance from the
+anchor, so the permitted excursion grows with distance from the last certain point. Throughout the
+paper *k* denotes a number of fitted weights and never appears as a model parameter; the gate
+exponent is γ.
+
+Figure 2 shows what this amounts to on three real wells. On a typical well (left) the carrier
+already has the shape and the ensemble corrects its level: 5.2 → 3.0 ft. On a tail well where the
+carrier drifts the wrong way (centre) the ensemble moves it 29.5 ft on average and recovers most of
+the error: 36.9 → 6.9. And on a well where the carrier was almost exactly right (right) the ensemble
+moves anyway — 10.6 ft, confidently, in the wrong direction: 1.2 → 11.6.
+
+That third panel is the whole wager. A member is not an independent prediction; it is a *move* away
+from a baseline, and what an ensemble weight buys is the size of that move. The design earns −2.9 ft
+on average and pays for it on wells where the baseline needed no help. Section 4 counts degrees of
+freedom over exactly this quantity.
+
+Nothing in this section is offered as novel. It exists so that "a member", "a family" and "a weight"
+are concrete objects when Section 4 counts degrees of freedom over them.
+
+---
+
