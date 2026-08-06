@@ -325,3 +325,33 @@ wellbores.
 
 ---
 
+## 5. Why members stop helping: a single frontier
+
+A member m helps the ensemble S only if its error is decorrelated enough to pay for being less
+accurate. Writing e for errors, the break-even condition is
+
+    corr(e_m, e_S) = σ_S / σ_m,
+
+which is exactly cov(e_m, e_S) = var(e_S) — that is, the least-squares slope of e_m on e_S equals 1.
+A member sitting on that line is one whose error *is* the ensemble's error plus independent noise.
+
+Figure 4 places all 671 members we ever built on this plane. The median ratio of achieved
+correlation to break-even correlation is 1.013, with a minimum of 0.808, across mechanisms that
+share no evidence — different reference logs, different neighbour definitions, different dip priors,
+different baselines. Members do not scatter around the line; they lie on it.
+
+Two consequences.
+
+**Tuning a member for accuracy moves it along the frontier and buys nothing.** This is why a project
+can spend weeks improving members and see the ensemble stand still, and it is consistent with an
+earlier observation of ours that a *more accurate* kriged surface blends *worse*, with the blend
+optimum at a surface RMS of 19–21 ft while a neural field at 14.77 loses.
+
+**Distance below the line is a screening statistic.** Of the three named families and the unlabelled
+remainder, only MV sits clearly below the line (median ratio 0.920, against 0.995 for strong, 1.006
+for lateral and 1.018 for the other 486 members), and MV is the only family that measurably paid.
+That ranking is obtained without scoring anything on held-out data, so a candidate family can be
+triaged before any of the validation budget in Section 3 is spent on it.
+
+---
+
