@@ -446,3 +446,40 @@ units visible, which is itself a form of fitting whose degrees of freedom nobody
 
 ---
 
+## 9. Conclusion
+
+The practice this paper argues against is not a mistake anyone makes carelessly. Adding candidate
+members and then fitting weights over them is the obvious way to use a pool of estimators, and on a
+large enough sample it is the right one. That simple averages often beat estimated weights has been
+known in forecasting for fifty years. What we measured is *where* the crossover sits when everything
+except the number of fitted weights is held fixed, and it is earlier than intuition suggests: on 465 wells, past about thirty fitted weights a non-negative
+mixture — cross-fitted by well — is *worse* than carrying the same members' average at a single
+fixed weight, and the same thirty-seven members are worth −0.033 ft one way and +0.024 ft the other.
+
+Three practical rules follow, and they cost nothing to adopt.
+
+**Count the weights you are fitting, not the members you are adding.** A family of fifty members
+entering through one weight is a one-parameter change. The same fifty entering through fifty weights
+is not, and the difference is larger than most of the modelling decisions it will be compared
+against.
+
+**Screen candidates on the frontier before spending validation budget.** A member's error
+correlation against the current ensemble, read against σ_S/σ_m, ranks families correctly without any
+held-out scoring. In our case it identified the one family that paid, out of four, from geometry
+alone.
+
+**Make the control the first experiment, not the fourth.** Every one of the three measurement
+failures in §7 produced a plausible number, and each was found only because something in the output
+was suspiciously clean — a null that was exactly zero, an effect that vanished, a divergence that
+had no mechanism. An identical-conditions run costs minutes and would have caught all three.
+
+None of this makes the underlying problem easier. The oracle bounds in §1 and §6 say that most of
+the remaining error is a per-well constant and slope that we can prove exists and cannot predict.
+What the paper offers is the discipline for finding out, quickly and honestly, that a proposed fix
+does not recover it — which on this problem was the difference between a year of measurable progress
+and a year of fitted noise.
+
+---
+
+---
+
