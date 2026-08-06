@@ -143,3 +143,33 @@ are concrete objects when Section 4 counts degrees of freedom over them.
 
 ---
 
+## 3. The protocol
+
+Every adoption decision in this paper is made the same way.
+
+**Regions, not folds.** Wells are partitioned into eight held-out blocks: quartiles of the formation
+isopach, and blocks of the X/Y plane. Random folds would leave a well's immediate neighbours in the
+training set, and several of our channels read neighbours directly, so a random split measures
+interpolation and not transfer.
+
+**Both sides tuned outside.** For a comparison of designs A and B, *both* are tuned on the wells
+outside the held-out block, on a fixed grid, and read on it. Comparing "B chosen elsewhere" against
+"the best possible A here" charges B for a cost both designs pay.
+
+**A fixed weight, not a re-tuned one.** The weight of an added term is a single value used in every
+block. Re-choosing it per block loses, measured three times (shape −0.040 tuned against −0.065
+fixed; MV +0.0087 against −0.0202).† The per-block choice is itself a noisy selection — Section 4's
+subject in miniature.
+
+**Scoring.** The mean change in pooled RMSE across the eight blocks, and the count of blocks that
+improve. Under a sign test, 7/8 is p = 0.035, 6/8 is p = 0.145 and 5/8 is chance. We report the
+count alongside the mean throughout, because the mean can be carried by one block.
+
+**Balance the blocks, and print their sizes.** Cutting X and Y independently on correlated
+coordinates gave blocks of 195/35/35/195 wells; two of the eight votes then came from 35-well blocks
+whose sampling noise exceeds any effect being measured. Splitting Y within each X half gives
+120/115/115/115 and moved one measured gain from −0.0436 to −0.0685 — a change of conclusion caused
+entirely by block construction. Our driver prints block sizes on every run.
+
+---
+
