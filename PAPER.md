@@ -32,3 +32,73 @@ places it linearly in the number of units.
 
 ---
 
+## 1. The problem, and why the external check cannot settle it
+
+A horizontal well is drilled through a layered formation, and what an operator needs to know is
+where the bit sits *within* the layer — the true vertical thickness from a reference horizon, dTVT —
+at every point along a lateral that runs for a mile or more. The measurements available are the
+well's own gamma-ray log, its survey geometry, a vertical "typewell" nearby with the same log
+against known depth, and whatever neighbouring laterals have already been drilled. The score is
+pooled RMSE of dTVT in feet over the rows of the hidden section, across 465 wells and 2.29 million
+rows; throughout, a *gain* is a change in that RMSE, so **negative is better**.
+
+Two properties of this problem shape everything that follows.
+
+**The metric is dominated by a per-well line** (Figure 1, right). Fitting an oracle constant and
+slope per well to the held-out rows takes the ensemble's error from 5.24 ft to 2.87 — 70.0% of the
+squared error lives in two numbers per well, and a constant alone accounts for 50.8%. **The error is
+also concentrated** (Figure 1, left): the worst 20 of 465 wells hold 43.1% of it and the worst 40
+hold 55.0%. In an earlier measurement on the same frame, within the worst 20 a per-well constant
+explained 65.7% of their error against 37.7% for the other 425 — the tail is not merely larger, it
+is a different kind of error. So the problem is not "predict a curve well"; it is "get one or two
+numbers per well right, and do not blow up on the tail".
+
+Both panels are oracle measurements: the per-well line is fitted on the very rows it is scored on,
+so it bounds what any method could recover rather than reporting a result.
+
+**The external check is smaller than the effects being chosen between.** The competition's public
+leaderboard covers 46 wells. Resampling wells with replacement puts its sampling standard deviation
+at 0.93 ft, so under a normal approximation it ranks a design that is genuinely 0.235 ft worse as
+better 27% of the time. Every effect this paper adjudicates is between 0.003 and 0.09 ft. The
+external check cannot see any of them, and a difference of under about half a foot on it carries no
+information about which design is better.
+
+That combination — a metric with very few effective degrees of freedom per well, and an external
+signal too small to adjudicate — is what makes this a good testbed for the question the paper is
+actually about: when you cannot appeal to a held-out leaderboard, how do you decide what to keep?
+
+**Where this sits.** The phenomenon we measure is not new. In the forecasting literature it is
+known as the *forecast combination puzzle*: a simple average of forecasts repeatedly beats
+combinations using weights estimated from the data (Bates and Granger, 1969; Timmermann, 2006;
+Smith and Wallis, 2009), and the accepted explanation is that estimating the weights costs more
+variance than the optimal weights buy (Claeskens et al., 2016; Wang et al., 2023). What is new here
+is not the direction of the effect but its *shape*: we hold the aggregation, the tuning location and
+the candidate pool fixed and vary only the number of fitted weights k, which turns the puzzle from a
+binary comparison — simple average versus estimated weights — into a curve with a measurable
+crossing point (k ≈ 33 on 465 wells).
+
+Three further connections. **Selection bias.** That optimising a selection criterion on the same
+data that evaluates it inflates the result is well established, with nested cross-validation as the
+standard remedy (Ambroise and McLachlan, 2002; Varma and Simon, 2006; Cawley and Talbot, 2010).
+Section 4.5 measures that cost here, and Section 4.2 finds it *negligible* for a single scalar
+weight, which is a caveat to the usual advice rather than a contradiction of it: the bias scales
+with the freedom being exercised, and one weight is very little freedom.
+
+**Stacking.** Our k-weight estimator is exactly Breiman's stacked regression — a non-negative
+least-squares combination of candidate predictors fitted out-of-fold (Wolpert, 1992; Breiman, 1996)
+— and the Super Learner literature extends it with cross-validated risk minimisation and asymptotic
+optimality guarantees (van der Laan et al., 2007). Those guarantees are asymptotic in the number of
+independent units. We have 465 wells, and our result is a finite-sample statement about where that
+regime begins: cross-fitting by well does *not* make forty fitted weights safe here.
+
+**Geostatistics.** One of our four likelihood channels is an ordinary-kriging interpolation of
+horizon picks across the field, in the standard formulation (Matheron, 1963; Chilès and Delfiner,
+2012). We use it as an input and make no methodological claim about it.
+
+We claim novelty in none of these literatures. What we contribute is a measurement that, as far as
+we know, has not been made in this form: the held-out gain as a function of the number of fitted
+weights, on a real problem, with everything else held fixed so that the curve means what it appears
+to mean.
+
+---
+
