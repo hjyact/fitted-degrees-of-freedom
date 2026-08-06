@@ -483,3 +483,36 @@ and a year of fitted noise.
 
 ---
 
+## Figure captions
+
+**Figure 1.** *The metric has few effective degrees of freedom per unit.* Left: cumulative share of
+squared error against wells ranked worst first; the worst 20 of 465 hold 43.1% and the worst 40 hold
+55.0%. Right: pooled RMSE of the ensemble (5.24 ft) after removing, per well, an oracle constant
+(3.67), an oracle slope (3.37) or both (2.87) — 70.0% of the squared error is two numbers per well.
+Both panels are oracle measurements fitted on the rows they are scored on, so they bound what any
+method could recover.
+
+**Figure 2.** *A member is a move from a baseline, not an independent prediction.* Three wells, each
+showing the truth, the carrier baseline and the ensemble. Left, a typical well: the carrier has the
+shape and the ensemble corrects the level, 5.2 → 3.0 ft. Centre, a tail well where the carrier
+drifts: the ensemble moves it 29.5 ft on average and recovers most of the error, 36.9 → 6.9. Right,
+a well where the carrier was almost exactly right: the ensemble moves 10.6 ft anyway, 1.2 → 11.6.
+The third panel is the wager the paper measures.
+
+**Figure 3.** *The held-out gain collapses as fitted degrees of freedom grow.* Two candidate
+families, k members drawn at random, 100 draws per k, non-negative least squares cross-fitted by
+well, read on the same eight held-out blocks. Shaded bands are one standard error. The curves are
+parallel — same slope, different intercept: the MV family starts useful (−0.026 at k = 1, best
+−0.034 at k = 6) and crosses zero at k ≈ 33; the shape family is already unprofitable at k = 1
+(+0.0016) and only worsens (+0.0244 at k = 36).
+
+**Figure 4.** *Every candidate lies on one accuracy/decorrelation frontier.* 671 members spanning
+unrelated mechanisms, plotted as the correlation between a member's error and the ensemble's against
+the member's own error. The solid line is break-even, corr(e_m, e_S) = σ_S/σ_m. The median ratio of
+achieved to break-even correlation is 1.013. Only the MV family sits clearly below the line (median
+0.920), and it is the only family that measurably paid — a ranking obtained without scoring anything
+on held-out data.
+
+**Figure file names.** `Fig1_motivation.png`, `Fig2_method.png`, `Fig3_dofcurve.png`,
+`Fig4_frontier.png`.
+
