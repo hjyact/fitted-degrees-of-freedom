@@ -414,3 +414,35 @@ weeks. The fix was to put the well count in the key of every new cache family.
 
 ---
 
+## 8. Limits
+
+Everything here is one design on one field. The members are variants of a single smoother, so two
+families are not two independent designs, and the eight blocks are geological and geographical
+partitions of that field — "held out" means held out within it. Nothing here tests transfer to
+another basin.
+
+The draw-to-draw spread in Figure 3 is real: a standard deviation of 0.02–0.03 against effects of
+0.03. At 100 draws the standard error is about 0.003, small enough that the monotone shape is
+resolved, but no single point on the curve is separately significant. Two independent
+implementations agree to four decimals at k = 50, which is what makes the algebra trustworthy.
+
+The protocol's own resolution is the honest floor. With eight blocks, a sign test cannot separate
+6/8 (p = 0.145) from noise on its own. That is why the argument rests on a monotone curve across 18
+values of k on two families, and not on any single adoption decision.
+
+**Our blocks are disjoint in space but not in provenance,** and this deserves to be stated plainly.
+Nothing is fitted on a held-out block, but the candidate pool itself was assembled over the project
+while all 465 units were visible. We can bound how much that matters, because two configurations of
+the deployed design were later evaluated against units held back entirely — 46 and 154 of them,
+never seen during development. The 465-unit frame ranked the larger configuration first by 0.103;
+both external evaluations ranked it *second*, by 0.075 and 0.098 respectively. A ranking from our
+frame can therefore be wrong by about 0.1 in RMSE, which is larger than several of the effects in
+Table 1.
+
+This does not touch the k-curve, which compares combination *rules* over one fixed pool and never
+uses the frame to choose members. It does bound what any single adoption decision made on this frame
+is worth, and it is a further instance of the paper's own thesis: the pool was curated with those
+units visible, which is itself a form of fitting whose degrees of freedom nobody counted.
+
+---
+
