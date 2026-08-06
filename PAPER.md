@@ -385,3 +385,32 @@ is.
 
 ---
 
+## 7. Three ways we measured the wrong thing
+
+Each produced a plausible number and survived review; each was caught because the output was
+suspiciously *clean*, not suspiciously wrong.
+
+**An unset environment variable.** Verifying that recovered build recipes reproduced their stored
+outputs, we omitted the variable naming the baseline column. The baseline attached to 6 wells of 40
+instead of 40, the rebuilt tracks differed from the originals, and we constructed three successive
+causal explanations — a stale cache, engine-version drift, bistability of the smoother — before
+running the identical-conditions control. With the variable set, the rebuild matches on 38 of 40
+wells with a per-well RMS median of 0.00003 ft. The control should have been the first experiment,
+not the fourth.
+
+**A mixed aggregation.** The first version of our Claim 1 driver compared a *pooled* in-sample
+number against a *mean of per-block* held-out numbers. The two aggregations differ by more than the
+effect, and the bias appeared to vanish. A comparison is only interpretable when everything except
+the quantity under test is held fixed — which is the paper's own thesis, violated by the paper's own
+first experiment.
+
+**A sign.** In the sufficient-statistics formulation of Section 4, passing +Dᵀr instead of −Dᵀr to a
+non-negative solver drives every weight to zero. The sweep then reported a gain of exactly 0.0000 at
+every k, which reads as a clean null result. A result that is *too* clean is a bug report.
+
+Related, and older: **a cache key must carry every input.** A neighbour-profile cache computed on a
+104-well run was silently reused on a 465-well frame, so that channel fired on 22% of the wells for
+weeks. The fix was to put the well count in the key of every new cache family.
+
+---
+
