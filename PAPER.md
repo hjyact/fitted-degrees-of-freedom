@@ -516,3 +516,12 @@ on held-out data.
 **Figure file names.** `Fig1_motivation.png`, `Fig2_method.png`, `Fig3_dofcurve.png`,
 `Fig4_frontier.png`.
 
+## Declaration of Generative AI and AI-assisted technologies in the writing process
+
+During the preparation of this work the author used Claude (Anthropic), an AI coding assistant, in
+order to implement the analysis code, generate the figures, and draft the manuscript text. After
+using this tool the author reviewed and edited the content as needed and takes full responsibility
+for the content of the publication.
+
+---
+
