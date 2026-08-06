@@ -173,3 +173,155 @@ entirely by block construction. Our driver prints block sizes on every run.
 
 ---
 
+## 4. The gain collapses with fitted degrees of freedom
+
+### 4.1 Setup
+
+Let A be a baseline design and let a *family* be a set of k candidate members that share a
+mechanism. We compare two ways of adding the family to A:
+
+* **one weight** — average the family, add the average as a single term, choose its weight q on a
+  fixed grid;
+* **k weights** — regress the residual of A on the k members individually under a non-negativity
+  constraint, cross-fitted by well so that no well's weights are fitted on that well.
+
+Both are then read the same way: eight held-out blocks (isopach quartiles and XY blocks, sizes
+115/115/115/115 and 120/115/115/115), everything tuned outside the block, scored by the mean change
+in pooled RMSE and by how many of the eight blocks improve.
+
+**Two reference points appear in this paper and must not be confused.** The *shipped ensemble*
+(5.2363 ft over a carrier baseline at 8.1089) is the finished design; Figures 1, 2 and 4 describe
+it. The *comparison baseline A* (5.3109 ft) is that design with the family under test removed —
+strong and lateral members only, one tuned mixture weight — so that adding the family is a change of
+exactly one term. Every number in Table 1 and Figure 3 is a change relative to A, not to the shipped
+ensemble. **Sign convention: a negative gain is an improvement**, since the score is an RMSE.
+
+The tuning grid is fixed throughout: lateral mixture ∈ {0.10, 0.15, 0.20, 0.25}, move weight
+w₀ ∈ {0.75, 0.85, 0.95}, gate exponent γ ∈ {0, −0.05, −0.10}, and the added term's weight
+∈ {0, 0.05, 0.075, 0.10, 0.15}. Both designs search the same grid; only the rows they search on
+differ.
+
+### 4.2 One weight is free to fit
+
+Table 1 gives, for four axes, the gain when the weight is chosen on the block being scored
+("in-sample") and when it is chosen outside it ("honest"). The two columns average the same eight
+per-block reads; the only difference is where the weight was chosen.
+
+| axis | k | in-sample (1 dof) | honest (1 dof) | wins | k-dof mixture, cross-fitted |
+|---|---|---|---|---|---|
+| shape channel | 37 | −0.0190 | −0.0332 | 6/8 | **+0.0250**, 4/8 |
+| MV family (4) | 4 | −0.0451 | −0.0588 | 6/8 | −0.0057, 6/8 |
+| MV family (all) | 50 | −0.0855 | −0.0762 | 6/8 | **+0.0035**, 3/8 |
+| tail constant correction | 1 | −0.0356 | −0.0383 | 5/8 | — |
+
+The last column is the same family entering through one weight *per member* instead of one weight
+for the family mean, fitted by non-negative least squares and cross-fitted by well. At k = 37 and
+k = 50 it is worse than doing nothing, which is the endpoint Section 4.3 fills in continuously.
+
+The ratios between the first two columns are 0.6, 0.8, 1.1 and 0.9. At this sample size a single
+scalar is not enough freedom to overfit measurably, and the widely repeated warning that in-sample
+tuning inflates a gain several fold does not describe this regime. (We had inherited exactly that warning as a 3–9× rule from our
+own earlier work; it did not reproduce, and we do not claim it.)
+
+The tail correction is worth reading as the control: 5/8 is chance, and it is the one axis we
+adopted and later abandoned.
+
+### 4.3 k weights do not transfer, on either family
+
+Figure 3 sweeps k for two families — 50 members built to hold their move against the baseline, and
+37 built around a shape channel — drawing k members at random, 100 draws per k, fitting
+non-negative weights cross-fitted by well, and reading on the same eight blocks.
+
+|  k | MV | shape |  | k | MV | shape |
+|---|---|---|---|---|---|---|
+| 1 | −0.0263 | +0.0016 | | 20 | −0.0160 | +0.0140 |
+| 2 | −0.0271 | +0.0013 | | 24 | −0.0083 | +0.0168 |
+| 4 | −0.0304 | +0.0033 | | 28 | −0.0041 | +0.0196 |
+| 6 | −0.0336 | +0.0047 | | 32 | −0.0032 | +0.0229 |
+| 8 | −0.0280 | +0.0060 | | 34 | +0.0033 | +0.0237 |
+| 12 | −0.0264 | +0.0086 | | 36 | +0.0029 | +0.0244 |
+| 16 | −0.0221 | +0.0118 | | 40 | +0.0061 | — |
+
+Both families degrade monotonically in k and the curves are parallel. They differ in intercept, not
+in slope: MV carries information the baseline lacks and helps until the fitting noise overtakes it
+at k ≈ 33; the shape family carries none that survives this baseline and is harmful from k = 1. The
+win rate follows (MV 5.30 → 3.55 of eight).
+
+That the two curves have the same slope is the point. Degradation with k is not a property of a
+particular family or of what it encodes; it is a property of fitting weights at this sample size.
+
+### 4.4 The combination rule is worth more than the channel
+
+The same 37 shape members appear in both experiments, and the two treatments disagree by as much as
+the project's largest modelling gain:
+
+    averaged, one fixed weight        −0.0332      (0 fitted weights inside the family)
+    37 cross-fitted NNLS weights      +0.0244      (37 fitted weights)
+
+Same members, same rows, same blocks. The 0.058 ft between them is entirely the combination rule —
+for comparison, the largest modelling gain in Table 1 is the full MV family at −0.076, and the shape
+channel's own contribution is −0.033. Choosing how to combine a fixed set of candidates is therefore
+a decision of the same size as choosing what to model, and it is usually made without measurement.
+Averaging is not what you do when you cannot afford to fit; here it is the better estimator, and the
+family is useful or useless depending only on which rule you use.
+
+Two cautions on reading the table. First, "k = 1" means different things in the two experiments — in
+Table 1 it is the family *mean* at one weight, in Figure 3 it is one randomly drawn *member* at one
+weight — and the gap between them (−0.0332 against +0.0016) is itself the averaging effect. Second,
+individual points in Figure 3 are not separately significant; the draw-to-draw standard deviation is
+0.02–0.03 against effects of 0.03, so the standard error at 100 draws is about 0.003. The monotone
+shape, replicated on two families, is the evidence.
+
+### 4.5 Discrete selection is the same curve
+
+Choosing which members to keep is the k → large end of this curve with the weights restricted to
+{0, 1}. Measured nested on the same frame, keeping the best three members costs +0.0767 and keeping
+the best one +0.1840 against keeping all of them at a fixed weight.† Batch-level selection is
+subtler and more instructive: choosing which batches to drop using only the other blocks reads
++0.0066 at 4/8, while the same comparison with the choice made once on all blocks read 8/8.† The 8/8
+was not evidence of a robust finding; it was the overfitting signature.
+
+"Ship everything at a fixed weight" is therefore not a heuristic to fall back on. It is where this
+curve has its optimum.
+
+### 4.6 The same curve under control, and where the real one sits
+
+One field is not evidence that anything general is happening, so we reproduced the experiment where
+n and k are set rather than observed (`stride/synthetic_dof.py`). Units carry a shared error
+component that a combination can explain, plus independent noise it cannot; k candidates are drawn,
+combined either by an equal-weight mean carried at one fitted scalar or by NNLS weights fitted
+out-of-fold, and read on held-out units. Everything else matches Section 4.1.
+
+**The first version had no crossing at all**, and the reason is worth stating because it identifies
+the mechanism. With *exchangeable* candidates the equal-weight mean is already the optimal
+weighting: there is nothing for fitting to find, Δ = 0, and k weights can only add variance. The
+measured curve was positive at every k and every n. Introducing heterogeneity in candidate quality —
+so that the optimal weights are unequal and Δ > 0 — produces the crossing immediately. Fitting is
+worth doing only to the extent that the candidates are *not* interchangeable, and it is worth doing
+for fewer of them than intuition suggests.
+
+With heterogeneous candidates the crossing point moves with the number of units:
+
+    n         60     125     250     500    1000
+    k*       3.5     7.4    12.5    16.6    22.8
+    k*/n   0.059   0.060   0.050   0.033   0.023
+
+    least squares:  k* = 0.019 n + 5.2      (corr 0.956)
+
+k* grows with n, close to linearly, which is what a variance term of order k/n predicts. It is not
+exactly linear: k*/n falls by a factor of 2.6 across the range, so the simple account is an
+approximation. We attribute the shortfall to the non-negativity constraint, which makes the
+*effective* number of fitted parameters smaller than k and increasingly so as k grows — but we have
+not verified that, and we report the deviation rather than fit a second parameter to it.
+
+**Where the real problem sits.** Extrapolating the simulation to n = 465 units predicts k* ≈ 14. The
+wellbore frame crosses at k ≈ 33, more than twice as late. The direction of the discrepancy is
+interpretable: our candidates are more heterogeneous than the simulation's, so the optimal weighting
+is further from equal and fitting keeps paying for longer. But we have not calibrated the
+simulation's heterogeneity to the measured pool, so this remains a statement about a discrepancy we
+observed and not a fit we achieved. What the simulation does establish is that the curve, the
+crossing, and its growth with n are properties of combining k estimates from n units, not of
+wellbores.
+
+---
+
