@@ -565,3 +565,23 @@ Wolpert, D. H. (1992). Stacked generalization. *Neural Networks* 5(2), 241–259
 
 ---
 
+## Appendix A — reproduction
+
+    python -m stride.subframe       # once: 0.77 GB in-RAM frame from the 29 GB member matrix
+    python -m stride.reproduce      # rebuild every figure and table, diff digests
+    python -m stride.reproduce --check   # digests only, no rebuild
+    python -m stride.reproduce --fast    # skip the steps that still read the full matrix
+
+| artefact | script | seconds |
+|---|---|---|
+| Figure 1 `motivation.png` | `stride.fig_motivation` | 1 |
+| Figure 2 `method.png` | `stride.fig_method` | 1 |
+| Figure 3 `dofcurve2.png` | `stride.dofcurve2` | 16 |
+| Figure 4 `frontier.png` | `stride.frontier_scatter` | ~500 |
+| Table 1 `claim1.csv` | `stride.claim1` | ~500 |
+| Table 1 `claim1_price.csv` | `stride.claim1_price` | ~500 |
+
+The three slow scripts still map the full member matrix, which is larger than this machine's RAM;
+porting them to `load_sub()` would bring them to seconds as well. `stride/figs/superseded/` holds an
+earlier one-family, twelve-draw version of Figure 3 and should not be cited.
+
