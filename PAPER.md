@@ -355,3 +355,33 @@ triaged before any of the validation budget in Section 3 is spent on it.
 
 ---
 
+## 6. Negative results
+
+These are not caveats; they are the argument that the combination rule, not the ingredient list, is
+where the remaining error lives.
+
+* **Robust aggregation loses.** Median, trimmed mean, Huber and isotonic combinations all read worse
+  than non-negative least squares, and the fitted global scale of the NNLS solution is 0.993 — there
+  is no shrinkage left to find.†
+* **Per-member clipping before the mean loses at every threshold**, whether the clip is on the
+  deviation from the baseline (10/20/30/50 ft) or on the distance from the family median (3/6/10/20
+  ft). Members that fail on a well fail *together*, so no order statistic sees an outlier.
+* **The post-hoc tail correction is dead.** Worth −0.109 in sample; −0.0122 at 5/8 held out.
+* **Residual boosting is dead.** A gradient-boosted model on the blend's residual reads +0.354
+  in-fold and −0.011 out of fold.†
+* **Per-well weights are unpredictable.** On the frame this was measured, an oracle that picks the
+  best ensemble weight per well reached 4.32 ft against 5.24 achieved, yet every observable we tried
+  predicted those weights at leave-one-fold-out correlation ≈ 0.†
+
+The last one is the sharpest: the information is *there* — the oracle proves it — and it is not
+recoverable from anything measurable. That is the same wall Section 4 measures from the other side.
+
+† **Provenance.** Results marked † were measured during the project rather than by the single driver
+that produces Table 1 and Figure 3, on the same 465-well frame and the same eight blocks but at
+earlier stages of the design, so their baselines differ by a few hundredths of a foot from the A
+defined in §4.1. We report them because they are the evidence that motivated the experiments in
+§4, and we mark them because they are not re-derivable from `stride.reproduce`. Everything unmarked
+is.
+
+---
+
